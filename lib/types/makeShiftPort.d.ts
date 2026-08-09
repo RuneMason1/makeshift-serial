@@ -11,8 +11,13 @@ export declare enum PacketType {
     STATE_UPDATE = 3,
     ERROR = 4,
     STRING = 5,
-    DISCONNECT = 6
+    DISCONNECT = 6,
+    GAME_CARD_BEGIN = 7,
+    GAME_ART_CHUNK = 8,
+    GAME_CARD_COMMIT = 9,
+    SCREEN_HOME = 10
 }
+export declare const MAX_PACKET_BODY_BYTES = 240;
 export type LogMessage = {
     level: LogLevel;
     message: string;
@@ -99,6 +104,12 @@ export declare class MakeShiftPort extends EventEmitter implements Msger {
     constructor(options: MakeShiftPortOptions);
     private parseSlipPacketHeader;
     ping(): void;
+    /**
+     * Sends a typed binary packet through the port's existing SLIP encoder.
+     * Keeping this on MakeShiftPort prevents clients from competing for the
+     * underlying serial device.
+     */
+    sendPacket(type: PacketType, body?: Uint8Array): boolean;
     private handleStateUpdate;
     private sendByte;
     private send;

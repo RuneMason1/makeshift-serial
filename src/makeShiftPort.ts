@@ -27,7 +27,13 @@ export enum PacketType {
   ERROR,
   STRING,
   DISCONNECT,
+  GAME_CARD_BEGIN,
+  GAME_ART_CHUNK,
+  GAME_CARD_COMMIT,
+  SCREEN_HOME,
 }
+
+export const MAX_PACKET_BODY_BYTES = 240
 
 export type LogMessage = {
   level: LogLevel,
@@ -280,6 +286,29 @@ export class MakeShiftPort extends EventEmitter implements Msger {
   }
 
   ping() { this.sendByte(PacketType.PING) }
+
+  /**
+   * Sends a typed binary packet through the port's existing SLIP encoder.
+   * Keeping this on MakeShiftPort prevents clients from competing for the
+   * underlying serial device.
+   */
+  public sendPacket(type: PacketType, body: Uint8Array = new Uint8Array()): boolean {
+    if (!this.isOpen || !this._deviceReady || body.byteLength > MAX_PACKET_BODY_BYTES) {
+      return false
+    }
+
+    try {
+      const packet = Buffer.allocUnsafe(body.byteLength + 1)
+      packet[0] = type
+      packet.set(body, 1)
+      this.debug(`Sending packet: ${nspct2(packet)}`)
+      this.slipEncoder.write(packet)
+      return true
+    } catch (error) {
+      this.error(error)
+      return false
+    }
+  }
 
   private handleStateUpdate(currState: MakeShiftState) {
     this.debug(`Handling state update`)
