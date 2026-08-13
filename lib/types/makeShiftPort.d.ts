@@ -15,8 +15,31 @@ export declare enum PacketType {
     GAME_CARD_BEGIN = 7,
     GAME_ART_CHUNK = 8,
     GAME_CARD_COMMIT = 9,
-    SCREEN_HOME = 10
+    SCREEN_HOME = 10,
+    GAME_LIST_BEGIN = 11,
+    GAME_LIST_ITEM = 12,
+    GAME_LIST_COMMIT = 13,
+    GOXLR_STATUS = 14,
+    NOW_PLAYING = 15,
+    ACTION_GLYPH = 16,
+    RUNTIME_MANIFEST_BEGIN = 17,
+    RUNTIME_COMPONENT = 18,
+    RUNTIME_MANIFEST_COMMIT = 19,
+    RUNTIME_CAPABILITIES = 20,
+    ASSET_BEGIN = 21,
+    ASSET_CHUNK = 22,
+    ASSET_COMMIT = 23,
+    DEVICE_VISUALS = 24
 }
+export declare const PacketAlias: {
+    readonly COLLECTION_CARD_BEGIN: PacketType.GAME_CARD_BEGIN;
+    readonly COLLECTION_ART_CHUNK: PacketType.GAME_ART_CHUNK;
+    readonly COLLECTION_CARD_COMMIT: PacketType.GAME_CARD_COMMIT;
+    readonly COLLECTION_LIST_BEGIN: PacketType.GAME_LIST_BEGIN;
+    readonly COLLECTION_LIST_ITEM: PacketType.GAME_LIST_ITEM;
+    readonly COLLECTION_LIST_COMMIT: PacketType.GAME_LIST_COMMIT;
+    readonly OVERLAY_GLYPH: PacketType.ACTION_GLYPH;
+};
 export declare const MAX_PACKET_BODY_BYTES = 240;
 export type LogMessage = {
     level: LogLevel;

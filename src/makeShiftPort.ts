@@ -31,7 +31,33 @@ export enum PacketType {
   GAME_ART_CHUNK,
   GAME_CARD_COMMIT,
   SCREEN_HOME,
+  GAME_LIST_BEGIN,
+  GAME_LIST_ITEM,
+  GAME_LIST_COMMIT,
+  GOXLR_STATUS,
+  NOW_PLAYING,
+  ACTION_GLYPH,
+  RUNTIME_MANIFEST_BEGIN,
+  RUNTIME_COMPONENT,
+  RUNTIME_MANIFEST_COMMIT,
+  RUNTIME_CAPABILITIES,
+  ASSET_BEGIN,
+  ASSET_CHUNK,
+  ASSET_COMMIT,
+  DEVICE_VISUALS,
 }
+
+// Compatibility aliases while the public runtime/protocol surface migrates
+// away from feature-specific naming. New code should prefer the generic names.
+export const PacketAlias = {
+  COLLECTION_CARD_BEGIN: PacketType.GAME_CARD_BEGIN,
+  COLLECTION_ART_CHUNK: PacketType.GAME_ART_CHUNK,
+  COLLECTION_CARD_COMMIT: PacketType.GAME_CARD_COMMIT,
+  COLLECTION_LIST_BEGIN: PacketType.GAME_LIST_BEGIN,
+  COLLECTION_LIST_ITEM: PacketType.GAME_LIST_ITEM,
+  COLLECTION_LIST_COMMIT: PacketType.GAME_LIST_COMMIT,
+  OVERLAY_GLYPH: PacketType.ACTION_GLYPH,
+} as const
 
 export const MAX_PACKET_BODY_BYTES = 240
 
